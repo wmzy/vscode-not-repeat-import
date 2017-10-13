@@ -39,9 +39,12 @@ exports.getCompletionItems = function (wordPrefix, document) {
   return _.uniq(modules)
     .map(k => {
       const [token, module, isDefault] = _.split(k, '?');
+      const moduleFrom = relative(document.fileName, module);
       return {
         token,
-        module: `import ${isDefault ? token : '{' + token + '}'} from '${relative(document.fileName, module)}'`
+        moduleFrom,
+        isDefault: !!isDefault,
+        module: `import ${isDefault ? token : '{' + token + '}'} from '${moduleFrom}'`
       };
     })
     .sort((a, b) => leven(wordPrefix, a.token) - leven(wordPrefix, b.token));

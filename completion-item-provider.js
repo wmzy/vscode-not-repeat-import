@@ -13,6 +13,9 @@ exports.provideCompletionItems = async function (document, position, token) {
         label: item.token,
         kind: vscode.CompletionItemKind.Reference,
         detail: item.module,
-        command: null
+        command: {
+          title: 'Import Token',
+          command: 'extension.importToken',
+          arguments: [item.token, item.moduleFrom, item.isDefault, false]}
       }));
 }

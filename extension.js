@@ -4,6 +4,7 @@ const _ = require('lodash');
 const vscode = require('vscode');
 const completionItemProvider = require('./completion-item-provider');
 const store = require('./store');
+const importTokenCommand = require('./import-token-command');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -18,12 +19,7 @@ function activate(context) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     context.subscriptions.push(
-      vscode.commands.registerCommand('extension.importToken', function () {
-          // The code you place here will be executed every time your command is executed
-
-          // Display a message box to the user
-          vscode.window.showInformationMessage('Import Token!');
-      })
+      vscode.commands.registerTextEditorCommand('extension.importToken', importTokenCommand)
     );
 
     vscode.workspace.findFiles('**/**/*.js', '**/node_modules/**', 1000)
